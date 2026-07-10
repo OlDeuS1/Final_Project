@@ -12,6 +12,22 @@ services:
       N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: "true"
     volumes:
       - n8n_data:/home/node/.n8n
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: mydb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
   n8n_data:
+  postgres_data:
